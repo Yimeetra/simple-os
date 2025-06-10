@@ -25,6 +25,7 @@ boot:
     mov eax, cr0
     or eax, 1
     mov cr0, eax
+
     jmp CODESEG:start_protected_mode
 
 [bits 32]
@@ -39,7 +40,7 @@ start_protected_mode:
     mov ebp, 0x90000
     mov esp, ebp
 
-    jmp 0x10000
+    jmp CODESEG:0x10000
 
 GDT_descriptor:
     dw GDT_end - GDT_start - 1

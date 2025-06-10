@@ -1,8 +1,12 @@
 OBJS = \
 	bootc.o \
-	idt.o
+	idt.o \
+	irqs.o \
+	interrupts.o \
+	timer.o
 
 CFLAGS += -ffreestanding
+CFLAGS += -ffunction-sections
 CFLAGS += -nostdlib
 CFLAGS += -m32
 CFLAGS += -fno-pie
@@ -12,6 +16,9 @@ CFLAGS += -O0
 boot.bin: boot.asm
 	nasm boot.asm -f bin -o boot.bin
 	
+irqs.o:
+	nasm -f elf32 irqs.asm
+
 kernel.o: $(OBJS)
 	ld -T kernel.ld $(OBJS) -o kernel.o --build-id=none
 

@@ -1,20 +1,15 @@
-#include "idt.h"
-
-void isr0_handler();
+#include "interrupts.h"
+#include "inline_asm.h"
+#include "timer.h"
 
 void main() {
-    idt_init();
-    idt_add_gate(0, isr0_handler, 0x0008, 0x8E);
+    interrupts_init();
+    pit_set_frequency(1000);
+    __asm__ volatile("sti");
 
     clear();
-
-    __asm__ volatile("int $0");
-
+    
     while (1);
-}
-
-void isr0_handler() {
-    putc('0', 0x0f, 0, 0);
 }
 
 

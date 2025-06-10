@@ -5,7 +5,10 @@ SECTIONS
 {
     . = 0x10000;
     
-    .text : { *(.text .text.*) }
+    .text : {
+        KEEP(*(.text.main))
+        *(.text .text.*)
+    }
     .data : { *(.data .data.*) }
     .bss  : { *(.bss .bss.*) }
 

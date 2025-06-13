@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "stdarg.h": "c",
+        "stdint.h": "c",
+        "compare": "c",
+        "inline_asm.h": "c",
+        "format": "c",
+        "interrupts.h": "c",
+        "notes": "c",
+        "switch.h": "c",
+        "proc.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

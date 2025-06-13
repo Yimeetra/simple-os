@@ -3,7 +3,10 @@ extern irq0_handler
 
 
 irq0:
-    pusha
+    pushad
+    mov eax, esp
+    push eax
     call irq0_handler
-    popa
+    add esp, 4
+    popad
     iretd

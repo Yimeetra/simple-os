@@ -9,3 +9,8 @@ void pit_set_frequency(uint32_t frequency) {
     outb(0x40, (BASE_FREQUENCY/frequency));
     outb(0x40, (BASE_FREQUENCY/frequency) >> 8);
 }
+
+void sleep(float seconds) {
+    float end_at = channel0.counter + seconds*channel0.frequency;
+    while (channel0.counter < end_at);
+}

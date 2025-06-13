@@ -3,7 +3,10 @@ OBJS = \
 	idt.o \
 	irqs.o \
 	interrupts.o \
-	timer.o
+	timer.o \
+	io.o \
+	switch.o \
+	proc.o
 
 CFLAGS += -ffreestanding
 CFLAGS += -ffunction-sections
@@ -12,12 +15,16 @@ CFLAGS += -m32
 CFLAGS += -fno-pie
 CFLAGS += -falign-functions=4
 CFLAGS += -O0
+CFLAGS += -g
 
 boot.bin: boot.asm
 	nasm boot.asm -f bin -o boot.bin
 	
 irqs.o:
-	nasm -f elf32 irqs.asm
+	nasm -f elf32 irqs.asm -g
+
+switch.o:
+	nasm -f elf32 switch.asm -g
 
 kernel.o: $(OBJS)
 	ld -T kernel.ld $(OBJS) -o kernel.o --build-id=none
@@ -40,3 +47,6 @@ gdb:
 clean:
 	rm *.o
 	rm *.bin
+
+show-functions:
+	objdump -d kernel.o | grep '^.*>:' | cut -d ':' -f1

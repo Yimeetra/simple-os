@@ -4,8 +4,8 @@
 #include "idt.h"
 #include "inline_asm.h"
 
-void interrupts_init();
+extern char *exception_name[32];
 
-void isr0_handler();
+void interrupts_init();
 
 #endif

@@ -44,3 +44,9 @@ void gdt_init() {
         : "memory", "ax"
     );
 }
+
+void gdt_add_entry(struct gdt_entry entry) {
+    int len = (gdt_descriptor.size + 1) / sizeof(struct gdt_entry);
+    gdt[len] = entry;
+    gdt_descriptor.size = (len + 1) * sizeof(struct gdt_entry) - 1;
+}

@@ -13,7 +13,13 @@
         "proc.h": "c",
         "executor": "c",
         "io_context": "c",
-        "cstdint": "cpp"
+        "cstdint": "cpp",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "idt.h": "c",
+        "system_error": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

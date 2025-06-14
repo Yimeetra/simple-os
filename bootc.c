@@ -43,7 +43,6 @@ void main() {
 
     create_proc(proc1);
 
-
     __asm__ volatile("sti");
 
     while (1);

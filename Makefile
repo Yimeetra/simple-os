@@ -1,13 +1,14 @@
 OBJS = \
 	bootc.o \
 	idt.o \
-	irqs.o \
+	interrupts_asm.o \
 	interrupts.o \
 	timer.o \
 	io.o \
 	switch.o \
 	proc.o \
-	gdt.o
+	gdt.o \
+	string.o
 
 CFLAGS += -ffreestanding
 CFLAGS += -ffunction-sections
@@ -21,8 +22,8 @@ CFLAGS += -g
 boot.bin: boot.asm
 	nasm boot.asm -f bin -o boot.bin
 	
-irqs.o:
-	nasm -f elf32 irqs.asm -g
+interrupts_asm.o:
+	nasm -f elf32 interrupts_asm.asm -g
 
 switch.o:
 	nasm -f elf32 switch.asm -g

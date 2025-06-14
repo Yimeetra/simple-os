@@ -21,5 +21,6 @@ extern struct gdt_descriptor gdt_descriptor;
 extern struct gdt_entry *gdt;
 
 void gdt_init();
+void gdt_add_entry(struct gdt_entry entry);
 
 #endif

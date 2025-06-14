@@ -6,9 +6,9 @@
       "name": "GDB remote QEMU",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/kernel.o",    // путь к твоему elf-файлу
+      "program": "${workspaceFolder}/kernel.o",
       "miDebuggerServerAddress": "localhost:1234",
-      "miDebuggerPath": "gdb",              // или путь к gdb
+      "miDebuggerPath": "gdb",
       "cwd": "${workspaceFolder}",
       "MIMode": "gdb",
       "stopAtEntry": true,

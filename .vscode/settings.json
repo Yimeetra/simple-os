@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.html": "html",
         "string.h": "c",
         "stdarg.h": "c",
         "stdint.h": "c",
@@ -9,7 +10,10 @@
         "interrupts.h": "c",
         "notes": "c",
         "switch.h": "c",
-        "proc.h": "c"
+        "proc.h": "c",
+        "executor": "c",
+        "io_context": "c",
+        "cstdint": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

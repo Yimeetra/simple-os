@@ -3,31 +3,46 @@
 #include "timer.h"
 #include "io.h"
 #include "proc.h"
+#include "gdt.h"
 
+char stdout[1024*4] = "";
+int len = 0;
 
 void proc1() {
-    for (int i = 0;; ++i) {
-        putd(i, 0x0f, 0, 8);
-        sleep(.1);
-    }
-}
+    while (1) {
+        int col = 0;
+        int row = 15;
+        for (int i = 0; i < len; ++i) {
+            switch (stdout[i]) {
+            case '\n':
+                row++;
+                break;
 
-void proc2() {
-    for (int i = 0; i < 10; ++i) {
-        putd(i, 0x0f, 0, 16);
-        sleep(.1);
+            case '\r':
+                col = 0;
+                break;
+        
+            
+            default:
+                putc(stdout[i], 0x0f, row, col);
+                col++;
+                break;
+            }
+        
+        }
     }
 }
 
 void main() {
+    gdt_init();
     interrupts_init();
-    pit_set_frequency(100);
+    pit_set_frequency(50);
     procs_init();
 
-    create_proc(proc1);
-    create_proc(proc2);
-
     clear();
+
+    create_proc(proc1);
+
 
     __asm__ volatile("sti");
 

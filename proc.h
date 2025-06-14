@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define MAX_PROCS 10
+#define MAX_PROCS 2
 #define PROC_STACK_SIZE 0x1000
 #define PROC_PADDING 0x1000
 #define PROCS_SPACE_START 0x20000
@@ -32,6 +32,7 @@ struct proc {
     struct context context; 
     uint32_t pid;
     enum proc_state state;
+    uint32_t wait_until;
 };
 
 extern struct proc procs[MAX_PROCS];
@@ -43,5 +44,6 @@ extern void switch_to(struct context *new);
 int32_t create_proc(void (*entry)());
 struct proc *sched();
 void procs_init();
+void wait(float seconds);
 
 #endif

@@ -4,6 +4,7 @@
 #include "proc.h"
 
 extern void irq0(void);
+extern void irq1(void);
 
 extern struct timer_channel channel0;
 
@@ -37,38 +38,25 @@ void put_context(struct context *context, int col) {
     putd(context->eax, 0x0f, 11, col+8);
 }
 
-void put_eip(char attr, int row, int col) {
-    uint32_t eip;
-    asm volatile (
-        "call 1f\n"
-        "1:\n"
-        "pop %0\n"
-        : "=r"(eip)
-    );
-    putd(eip, attr, row, col);
-}
-
 void irq0_handler(struct context *context) {
-    struct context old;
-    struct context new;
     channel0.counter++;
     putd((int)channel0.counter/channel0.frequency, 0x0f, 0, 0);
 
-    for (int i = 0; i < MAX_PROCS; ++i) {
-        switch (procs[i].state) {
-        case PROC_FINISHED:
-            puts("PROC_FINISHED", 14, 0x0f, 13+i, 0);
-            break;
-        case PROC_STOPPED:
-            puts("PROC_STOPPED", 13, 0x0f, 13+i, 0);
-            break;
-        case PROC_RUNNING:
-            puts("PROC_RUNNING", 13, 0x0f, 13+i, 0);
-            break;
-        default:
-            break;
-        }
-    }
+    //for (int i = 0; i < MAX_PROCS; ++i) {
+    //    switch (procs[i].state) {
+    //    case PROC_FINISHED:
+    //        puts("PROC_FINISHED", 14, 0x0f, 13+i, 0);
+    //        break;
+    //    case PROC_STOPPED:
+    //        puts("PROC_STOPPED", 13, 0x0f, 13+i, 0);
+    //        break;
+    //    case PROC_RUNNING:
+    //        puts("PROC_RUNNING", 13, 0x0f, 13+i, 0);
+    //        break;
+    //    default:
+    //        break;
+    //    }
+    //}
 
     if (current_proc != 0)
         current_proc->context = *context;
@@ -78,6 +66,12 @@ void irq0_handler(struct context *context) {
 
     if (current_proc != 0)
         switch_to(&current_proc->context);
+}
+
+int pos = 0;
+
+void irq1_handler() {
+    outb(0x20, 0x20);
 }
 
 void exepction_0_handler() {
@@ -230,7 +224,8 @@ void interrupts_init() {
     outb(0x21, 0x01);
     outb(0xA1, 0x01);
 
-    idt_add_gate(0x20, (uintptr_t) irq0, 0x0008, 0x8E);
+    idt_add_gate(32, (uintptr_t) irq0, 0x0008, 0x8E);
+    idt_add_gate(33, (uintptr_t) irq1, 0x0008, 0x8E);
 
     idt_add_gate(0, (uintptr_t) exepction_0_handler, 0x0008, 0x8E);
     idt_add_gate(1, (uintptr_t) exepction_1_handler, 0x0008, 0x8E);

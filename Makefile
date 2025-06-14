@@ -6,7 +6,8 @@ OBJS = \
 	timer.o \
 	io.o \
 	switch.o \
-	proc.o
+	proc.o \
+	gdt.o
 
 CFLAGS += -ffreestanding
 CFLAGS += -ffunction-sections
